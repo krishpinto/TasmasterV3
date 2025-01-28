@@ -18,7 +18,7 @@ export function Navbar() {
 
           <nav className="hidden md:flex items-center space-x-6">
             <Link
-              href="#section1"
+              href="/#section1"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Home
@@ -32,13 +32,13 @@ export function Navbar() {
             </Link>
 
             <Link
-              href="#section2"
+              href="/#section2"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               About
             </Link>
             <Link
-              href="#section3"
+              href="/#section3"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               How it works
