@@ -1,9 +1,24 @@
-import { GalleryVerticalEnd } from "lucide-react";
+"use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "../../components/login-form";
-import { redirect } from "next/dist/server/api-utils";
+import { UserAuth } from "../../context/AuthContext";
 
 export default function LoginPage() {
+  const { user } = UserAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
+
+  if (user) {
+    return null; // or a loading spinner
+  }
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
