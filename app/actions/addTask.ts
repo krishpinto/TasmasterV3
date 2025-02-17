@@ -2,7 +2,7 @@ import { db } from "../../firebase"; // Import the initialized Firestore instanc
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Define the Task type here
-type Task = {
+export type Task = {
   title: string;
   description: string;
   completed: boolean;

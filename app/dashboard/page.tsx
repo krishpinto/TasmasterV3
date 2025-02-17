@@ -11,11 +11,15 @@ import { PlusCircle, BarChart, TrendingUp } from "lucide-react";
 import { Sidebar } from "./sidebar";
 import { UserAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import addTask from "@/app/actions/addTask"; // Import the addTask function
+import TaskForm from "@/components/TaskForm"; // Import the TaskForm component
+import { ToastContainer } from "react-toastify"; // Import ToastContainer from react-toastify
+
+import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 
 export default function Dashboard() {
   const { user } = UserAuth();
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
   useEffect(() => {
     if (!user) {
@@ -35,39 +39,20 @@ export default function Dashboard() {
     { id: 4, title: "Update documentation", completed: false },
   ]);
 
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [newTaskDescription, setNewTaskDescription] = useState("");
+  const handleAddTaskClick = () => {
+    setIsModalOpen(true);
+  };
 
-  const handleAddTask = async () => {
-    if (!newTaskTitle || !newTaskDescription) {
-      alert("Please fill in both the title and description.");
-      return;
-    }
-
-    const newTask = {
-      id: tasks.length + 1, // Generate a new id
-      title: newTaskTitle,
-      description: newTaskDescription,
-      completed: false,
-      userId: user.uid, // Assuming user object has a uid property
-    };
-
-    try {
-      await addTask(newTask);
-      setTasks([...tasks, newTask]);
-      setNewTaskTitle("");
-      setNewTaskDescription("");
-    } catch (error) {
-      console.error("Error adding task: ", error);
-    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div className="relative flex h-screen overflow-hidden">
+      <ToastContainer /> {/* Add ToastContainer for notifications */}
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#212121] to-[#1a1a1a] pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-transparent pointer-events-none" />
-
       {/* Content wrapper */}
       <div className="relative flex w-full h-full text-white">
         {/* Sidebar */}
@@ -86,7 +71,7 @@ export default function Dashboard() {
               </div>
               <Button
                 className="gap-2 bg-red-500 hover:bg-red-600"
-                onClick={handleAddTask}
+                onClick={handleAddTaskClick}
               >
                 <PlusCircle className="h-4 w-4" />
                 Add Task
@@ -181,31 +166,17 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
-      {/* Add Task Form */}
-      <div className="fixed bottom-4 right-4 bg-[#212121]/80 backdrop-blur-sm p-4 rounded-lg border-[#2a2a2a]">
-        <h3 className="font-semibold text-lg mb-4">Add New Task</h3>
-        <div className="space-y-4">
-          <Input
-            placeholder="Task Title"
-            value={newTaskTitle}
-            onChange={(e) => setNewTaskTitle(e.target.value)}
-            className="bg-[#2a2a2a] border-[#3a3a3a] text-white placeholder:text-gray-400"
-          />
-          <Input
-            placeholder="Task Description"
-            value={newTaskDescription}
-            onChange={(e) => setNewTaskDescription(e.target.value)}
-            className="bg-[#2a2a2a] border-[#3a3a3a] text-white placeholder:text-gray-400"
-          />
-          <Button
-            className="w-full bg-red-500 hover:bg-red-600"
-            onClick={handleAddTask}
-          >
-            Add Task
-          </Button>
+      {/* Add Task Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <TaskForm setTasks={setTasks} onClose={handleCloseModal} />
+            <Button className="mt-4" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

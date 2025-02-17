@@ -25,7 +25,7 @@ export default function Layout({
       <body className={inter.className}>
         <AuthContextProvider>
           {/* <NavbarWrapper /> */}
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
         </AuthContextProvider>
       </body>
