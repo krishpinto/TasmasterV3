@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import { GalleryVerticalEnd } from "lucide-react";
 import { SignupForm } from "../../components/signup-form";
 import { UserAuth } from "../../context/AuthContext";
-import { LoginForm } from "@/components/login-form";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const { user } = UserAuth();
   const router = useRouter();
 
@@ -30,7 +29,7 @@ export default function LoginPage() {
           </div>
           Taskmaster
         </a>
-        <LoginForm />
+        <SignupForm />
       </div>
     </div>
   );

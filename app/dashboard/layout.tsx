@@ -1,20 +1,15 @@
-import type { Metadata } from "next"
+'use client';
 
-export const metadata: Metadata = {
-  title: "TaskMaster Dashboard",
-  description: "Manage your tasks and boost your productivity with TaskMaster Dashboard.",
-}
+import { Sidebar } from "./sidebar";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <>
-      {/* Dashboard-specific layout content can go here */}
-      <main>{children}</main>
-    </>
-  )
+    <div className="flex h-screen">
+      <main className="flex-1">{children}</main>
+    </div>
+  );
 }
-

@@ -1,27 +1,34 @@
-import "./globals.css"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import { NavbarWrapper } from "@/components/NavbarWrapper"
+"use client";
 
-const inter = Inter({ subsets: ["latin"] })
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { NavbarWrapper } from "@/components/NavbarWrapper";
+import { AuthContextProvider } from "@/context/AuthContext";
+import { Navbar } from "@/components/navbar";
 
-export const metadata: Metadata = {
+const inter = Inter({ subsets: ["latin"] });
+
+const metadata: Metadata = {
   title: "TaskMaster - Organize Your Life",
-  description: "A powerful, intuitive todo list application that helps you stay organized and boost your productivity.",
-}
+  description:
+    "A powerful, intuitive todo list application that helps you stay organized and boost your productivity.",
+};
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavbarWrapper />
-        {children}
+        <AuthContextProvider>
+          {/* <NavbarWrapper /> */}
+          <Navbar />
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
-  )
+  );
 }
-
