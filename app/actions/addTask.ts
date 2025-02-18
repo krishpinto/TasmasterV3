@@ -1,8 +1,10 @@
+import { Key } from "react";
 import { db } from "../../firebase"; // Import the initialized Firestore instance
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Define the Task type here
 export type Task = {
+  id: string;
   title: string;
   description: string;
   completed: boolean;

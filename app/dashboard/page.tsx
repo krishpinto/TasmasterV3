@@ -12,7 +12,9 @@ import { Sidebar } from "./sidebar";
 import { UserAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import TaskForm from "@/components/TaskForm"; // Import the TaskForm component
+import TaskModal from "@/components/TaskModal"; // Import the TaskModal component
 import { ToastContainer } from "react-toastify"; // Import ToastContainer from react-toastify
+import fetchTasks, { Task } from "@/app/actions/fetchTasks"; // Import the fetchTasks function and Task type
 
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 
@@ -20,24 +22,17 @@ export default function Dashboard() {
   const { user } = UserAuth();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [date, setDate] = useState<Date | undefined>(undefined); // State to store the selected date
+  const [tasks, setTasks] = useState<Task[]>([]); // State to store tasks
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to store the selected task
 
   useEffect(() => {
     if (!user) {
       router.push("/login");
+    } else {
+      fetchTasks(user.uid).then(setTasks);
     }
   }, [user, router]);
-
-  if (!user) {
-    return null; // or a loading spinner
-  }
-
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Complete project proposal", completed: false },
-    { id: 2, title: "Review code changes", completed: true },
-    { id: 3, title: "Team meeting at 2 PM", completed: false },
-    { id: 4, title: "Update documentation", completed: false },
-  ]);
 
   const handleAddTaskClick = () => {
     setIsModalOpen(true);
@@ -45,6 +40,19 @@ export default function Dashboard() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    fetchTasks(user.uid).then(setTasks); // Fetch tasks again after closing the modal
+  };
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+  };
+
+  const handleTaskModalClose = () => {
+    setSelectedTask(null);
+  };
+
+  const handleTaskDelete = (taskId: string) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
   return (
@@ -137,8 +145,11 @@ export default function Dashboard() {
                   <ScrollArea className="h-[calc(100vh-280px)]">
                     <div className="space-y-4">
                       {tasks.map((task) => (
-                        <div key={task.id}>
-                          <div className="flex items-center gap-4 py-2">
+                        <div
+                          key={task.id}
+                          onClick={() => handleTaskClick(task)}
+                        >
+                          <div className="flex items-center gap-4 py-2 cursor-pointer">
                             <input
                               type="checkbox"
                               checked={task.completed}
@@ -176,6 +187,14 @@ export default function Dashboard() {
             </Button>
           </div>
         </div>
+      )}
+      {/* Task Details Modal */}
+      {selectedTask && (
+          <TaskModal
+          task={selectedTask}
+          onClose={handleTaskModalClose}
+          onDelete={handleTaskDelete}
+        />
       )}
     </div>
   );

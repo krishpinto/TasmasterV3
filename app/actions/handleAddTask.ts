@@ -20,6 +20,7 @@ const handleAddTask = async (
     description,
     completed: false,
     userId,
+    id: ""
   };
 
   try {
