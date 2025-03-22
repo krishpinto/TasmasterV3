@@ -16,38 +16,33 @@ export type Task = {
   userId: string;
 };
 
-const fetchTasks = async (
-  userId: string,
-  selectedDate?: Date
-): Promise<Task[]> => {
-  const startOfDay = selectedDate
-    ? Timestamp.fromDate(new Date(selectedDate.setHours(0, 0, 0, 0)))
-    : null;
-  const endOfDay = selectedDate
-    ? Timestamp.fromDate(new Date(selectedDate.setHours(23, 59, 59, 999)))
-    : null;
-
-  let q;
-
-  if (selectedDate) {
-    // Query tasks for the selected date
-    q = query(
-      collection(db, "tasks"),
-      where("userId", "==", userId),
-      where("createdAt", ">=", startOfDay),
-      where("createdAt", "<=", endOfDay)
-    );
-  } else {
-    // Query all tasks if no date is selected
-    q = query(collection(db, "tasks"), where("userId", "==", userId));
-  }
-
+async function getTasksFromDatabase(userId: string): Promise<Task[]> {
+  const q = query(collection(db, "tasks"), where("userId", "==", userId));
   const querySnapshot = await getDocs(q);
-  const tasksData = querySnapshot.docs.map((doc) => ({
+  return querySnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   })) as Task[];
-  return tasksData;
-};
+}
 
-export default fetchTasks;
+export default async function fetchTasks(userId: string, date?: Date) {
+  const tasks = await getTasksFromDatabase(userId); // Replace with your actual database fetch logic
+
+  if (!date) {
+    // If no date is provided, return all tasks
+    return tasks;
+  }
+
+  // Filter tasks for the provided date
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  return tasks.filter((task) => {
+    if (!task.createdAt) return false;
+    const taskDate = new Date(task.createdAt.seconds * 1000); // Convert Firestore timestamp to JS Date
+    return taskDate >= startOfDay && taskDate <= endOfDay;
+  });
+}
