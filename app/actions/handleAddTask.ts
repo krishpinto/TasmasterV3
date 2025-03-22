@@ -1,36 +1,33 @@
-import addTask from "./addTask";
-import { Task } from "./addTask"; // Import the Task type
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase";
 
-const handleAddTask = async (
-  title: string,
-  description: string,
-  userId: string,
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
-  setTitle: React.Dispatch<React.SetStateAction<string>>,
-  setDescription: React.Dispatch<React.SetStateAction<string>>,
-  setCompleted: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  if (!title || !description) {
-    alert("Please fill in both the title and description.");
-    return;
-  }
+interface AddTaskParams {
+  title: string;
+  description: string;
+  userId: string;
+}
 
-  const newTask: Task = {
-    title,
-    description,
-    completed: false,
-    userId,
-    id: ""
-  };
-
+const handleAddTask = async ({ title, description, userId }: AddTaskParams) => {
   try {
-    await addTask(newTask);
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    setTitle("");
-    setDescription("");
-    setCompleted(false);
+    const docRef = await addDoc(collection(db, "tasks"), {
+      title,
+      description,
+      userId,
+      completed: false, // Default value for completed
+      createdAt: serverTimestamp(), // Add a timestamp
+    });
+
+    return {
+      id: docRef.id,
+      title,
+      description,
+      userId,
+      completed: false,
+      createdAt: new Date(), // Return a JS Date object for local state
+    };
   } catch (error) {
-    console.error("Error adding task: ", error);
+    console.error("Error adding task:", error);
+    throw error;
   }
 };
 

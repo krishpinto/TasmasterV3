@@ -2,6 +2,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase"; // Import the Firestore instance
 
 export type Task = {
+  createdAt: any;
   id: string;
   title: string;
   description: string;
