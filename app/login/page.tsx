@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { GalleryVerticalEnd } from "lucide-react";
-import { SignupForm } from "../../components/signup-form";
 import { UserAuth } from "../../context/AuthContext";
 import { LoginForm } from "@/components/login-form";
 
@@ -22,7 +20,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10 pt-8">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10 pt-8 pb-20">
+      {/* Added 'min-h-screen' to ensure full height and 'pb-20' for extra bottom padding */}
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex w-full max-w-sm flex-col gap-6">
           <div className="h-10" /> {/* Placeholder div to maintain spacing */}

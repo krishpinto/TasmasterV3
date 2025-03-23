@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,8 +18,22 @@ import { useGoogleSignIn } from "@/app/actions/useGoogleSignIn";
 interface SignupFormProps extends React.ComponentPropsWithoutRef<"div"> {}
 
 export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
-  const { googleSignIn } = UserAuth();
+  const { googleSignIn, signUp } = UserAuth();
   const { handleGoogleSignIn } = useGoogleSignIn(googleSignIn);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signUp(email, password);
+      console.log("User signed up successfully");
+    } catch (err: any) {
+      setError(err.message);
+      console.error("Error signing up:", err.message);
+    }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -30,7 +45,8 @@ export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSignUp}>
+            {error && <p className="text-red-500">{error}</p>}
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button
@@ -75,7 +91,7 @@ export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
                   <Input
                     id="name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Krish"
                     required
                   />
                 </div>
@@ -84,13 +100,22 @@ export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
                     required
                   />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" required />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    required
+                  />
                 </div>
                 <Button type="submit" className="w-full">
                   Sign Up
