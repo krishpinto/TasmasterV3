@@ -38,6 +38,29 @@ export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
                   className="w-full"
                   onClick={handleGoogleSignIn}
                 >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 48 48"
+                    className="h-4 w-4 mr-2"
+                  >
+                    <path
+                      fill="#EA4335"
+                      d="M24 9.5c3.14 0 5.97 1.2 8.2 3.14l6.1-6.1C34.2 3.14 29.4 1 24 1 14.6 1 6.8 6.8 3.4 15.1l7.5 5.8C12.6 13.2 17.8 9.5 24 9.5z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M46.5 24c0-1.7-.2-3.4-.5-5H24v9.5h12.7c-.5 2.7-2 5-4.2 6.6l6.5 5.1c3.8-3.5 6-8.6 6-14.2z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M10.9 28.9c-.5-1.5-.8-3.1-.8-4.9s.3-3.4.8-4.9l-7.5-5.8C1.2 17.2 0 20.5 0 24s1.2 6.8 3.4 9.8l7.5-5.9z"
+                    />
+                    <path
+                      fill="#4285F4"
+                      d="M24 48c6.5 0 12-2.1 16.1-5.7l-6.5-5.1c-2.2 1.5-5 2.4-8 2.4-6.2 0-11.4-4.2-13.3-9.8l-7.5 5.8C6.8 41.2 14.6 48 24 48z"
+                    />
+                    <path fill="none" d="M0 0h48v48H0z" />
+                  </svg>
                   Sign up with Google
                 </Button>
               </div>
@@ -49,28 +72,43 @@ export const SignupForm: FC<SignupFormProps> = ({ className, ...props }) => {
               <div className="grid gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" type="text" placeholder="John Doe" required />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    required
+                  />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="m@example.com" required />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    required
+                  />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
                   <Input id="password" type="password" required />
                 </div>
-                <Button type="submit" className="w-full">Sign Up</Button>
+                <Button type="submit" className="w-full">
+                  Sign Up
+                </Button>
               </div>
               <div className="text-center text-sm">
-                Already have an account? {" "}
-                <a href="/login" className="underline underline-offset-4">Log in</a>
+                Already have an account?{" "}
+                <a href="/login" className="underline underline-offset-4">
+                  Log in
+                </a>
               </div>
             </div>
           </form>
         </CardContent>
       </Card>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>.
       </div>
     </div>
   );
