@@ -1,4 +1,5 @@
 import { CheckCircle, ListTodo, Plus, UserCircle } from "lucide-react"
+import { FlipText } from "@/components/magicui/flip-text";
 
 export function FlowchartSection() {
   const steps = [
@@ -31,7 +32,11 @@ export function FlowchartSection() {
   return (
     <section id = 'section3' className="py-32 px-4 bg-gradient-to-b from-background/95 via-background/90 to-background/80">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">How It Works</h2>
+      <h2 className="text-5xl md:text-6xl font-bold text-center mb-20">
+          <FlipText duration={0.5} delayMultiple={0.1} className="text-5xl md:text-6xl font-bold">
+            How it Works?
+          </FlipText>
+        </h2>
         <div className="grid md:grid-cols-4 gap-12">
           {steps.map((item, index) => (
             <div key={index} className="text-center relative">
