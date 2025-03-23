@@ -1,19 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { TextAnimate } from "@/components/magicui/text-animate";
 
 export function HeroSection() {
   return (
-    <section id = 'section1' className="relative py-32 px-4 bg-gradient-to-b from-primary/20 via-background to-background/80">
+    <section
+      id="section1"
+      className="relative py-40 px-4 bg-gradient-to-b from-primary/20 via-background to-background/80"
+    >
       <div className="container mx-auto max-w-6xl">
         <div className="text-center space-y-8">
           <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
             Organize Your Life with
             <span className="text-primary block mt-2">TaskMaster</span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+          <TextAnimate
+            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto"
+            animation="fadeIn"
+            duration={0.5}
+            delay={0.2}
+            by="word"
+          >
             A powerful, intuitive todo list application that helps you stay
             organized and boost your productivity with seamless task management.
-          </p>
+          </TextAnimate>
           <div className="flex justify-center gap-4 pt-4">
             <Button
               size="lg"

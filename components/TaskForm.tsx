@@ -1,20 +1,22 @@
-// components/TaskForm.tsx
-import React, { useState } from "react";
-import { UserAuth } from "@/context/AuthContext";
-import handleAddTask from "@/app/actions/handleAddTask"; // Import the handleAddTask function
-import { Task } from "@/app/actions/addTask"; // Import the Task type
-import { toast } from "react-toastify"; // Import toast from react-toastify
+"use client";
 
-import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
+import type React from "react";
+import { useState } from "react";
+import { UserAuth } from "@/context/AuthContext";
+import handleAddTask from "@/app/actions/handleAddTask";
+import type { Task } from "@/app/actions/fetchTasks";
+import { toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const TaskForm: React.FC<{
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-  onClose: () => void; // Add onClose prop to close the modal
-}> = ({ setTasks, onClose }) => {
-  const { user } = UserAuth(); // Get the current user from AuthContext
+  onClose: () => void;
+  selectedDate: Date | undefined; // Accept the selected date as a prop
+}> = ({ setTasks, onClose, selectedDate }) => {
+  const { user } = UserAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [completed, setCompleted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,18 +26,34 @@ const TaskForm: React.FC<{
       return;
     }
 
-    await handleAddTask(
-      title,
-      description,
-      user.uid,
-      setTasks,
-      setTitle,
-      setDescription,
-      setCompleted
-    );
+    try {
+      // Use the selected date as the createdAt value, or default to the current date
+      const createdAt = selectedDate || new Date();
 
-    toast.success("Task added successfully!"); // Show success notification
-    onClose(); // Close the modal
+      // Call the handleAddTask function to add the task to Firestore
+      const newTask = await handleAddTask({
+        title,
+        description,
+        userId: user.uid,
+        createdAt,
+      });
+
+      // Update the tasks state in the parent component
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+
+      // Reset the form fields
+      setTitle("");
+      setDescription("");
+
+      // Show success notification
+      toast.success("Task added successfully!");
+
+      // Close the modal
+      onClose();
+    } catch (error) {
+      console.error("Error adding task:", error);
+      toast.error("Failed to add task. Please try again.");
+    }
   };
 
   return (
@@ -78,19 +96,6 @@ const TaskForm: React.FC<{
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             required
           />
-        </div>
-
-        <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            id="completed"
-            checked={completed}
-            onChange={(e) => setCompleted(e.target.checked)}
-            className="mr-2"
-          />
-          <label htmlFor="completed" className="text-sm text-gray-700">
-            Completed
-          </label>
         </div>
 
         <button

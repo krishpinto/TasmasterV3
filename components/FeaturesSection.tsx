@@ -1,11 +1,11 @@
-import type React from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle, ListTodo, Share2 } from "lucide-react"
+import type React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle, ListTodo, Share2 } from "lucide-react";
 
 interface FeatureCardProps {
-  icon: React.ReactNode
-  title: string
-  description: string
+  icon: React.ReactNode;
+  title: string;
+  description: string;
 }
 
 function FeatureCard({ icon, title, description }: FeatureCardProps) {
@@ -17,15 +17,20 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
         <p className="text-muted-foreground text-lg">{description}</p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export function FeaturesSection() {
   return (
-    <section id = 'section2' className="py-32 px-4 bg-gradient-to-b from-background/80 via-background/90 to-background/95">
+    <section
+      id="section2"
+      className="py-40 px-4 bg-gradient-to-b from-background/80 via-background/90 to-background/95"
+    >
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">Why Choose TaskMaster?</h2>
-        <div className="grid md:grid-cols-3 gap-12">
+        <h2 className="text-5xl md:text-6xl font-bold text-center mb-20">
+          Why Choose TaskMaster?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-16">
           <FeatureCard
             icon={<ListTodo className="h-12 w-12" />}
             title="Simple Organization"
@@ -44,6 +49,5 @@ export function FeaturesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -38,20 +38,6 @@ export function Sidebar() {
           <Button
             variant="ghost"
             className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-[#2a2a2a]"
-          >
-            <CalendarIcon className="h-4 w-4 flex-shrink-0" />
-            Calendar
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-[#2a2a2a]"
-          >
-            <Settings className="h-4 w-4 flex-shrink-0" />
-            Settings
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-[#2a2a2a]"
             onClick={handleLogOut}
           >
             <LogOut className="h-4 w-4 flex-shrink-0" />
