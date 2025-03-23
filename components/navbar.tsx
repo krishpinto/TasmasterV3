@@ -44,6 +44,13 @@ export function Navbar() {
             </Link>
 
             <Link
+              href="/#discover"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Discover
+            </Link>
+
+            <Link
               href="/dashboard"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
