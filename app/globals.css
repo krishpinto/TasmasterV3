@@ -4,32 +4,32 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 20, 20, 20;
+  --background-start-rgb: 10, 10, 10;
+  --background-end-rgb: 0, 0, 0;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 7%;
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 10%;
+    --card: 0 0% 6%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 10%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 72% 51%;
+    --primary: 0 84% 45%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 84% 45%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 72% 51%;
-    --chart-1: 0 72% 51%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 84% 45%;
+    --chart-1: 0 84% 45%;
     --chart-2: 220 70% 50%;
     --chart-3: 160 60% 45%;
     --chart-4: 30 80% 55%;
@@ -47,4 +47,14 @@
     background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
     min-height: 100vh;
   }
+}
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add a subtle text shadow to headings */
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
 }

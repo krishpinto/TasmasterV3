@@ -1,3 +1,5 @@
+"use client";
+
 import type React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, ListTodo, Share2 } from "lucide-react";
@@ -24,9 +26,17 @@ export function FeaturesSection() {
   return (
     <section
       id="section2"
-      className="py-40 px-4 bg-gradient-to-b from-background/80 via-background/90 to-background/95"
+      className="relative py-40 px-4"
     >
-      <div className="container mx-auto max-w-6xl">
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/50 to-transparent pointer-events-none" 
+        style={{ 
+          maskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)', 
+          WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
+          background: 'linear-gradient(to bottom, var(--background) 0%, var(--background)/50 50%, transparent 100%)'
+        }} 
+      />
+      <div className="container mx-auto max-w-6xl relative">
         <h2 className="text-5xl md:text-6xl font-bold text-center mb-20">
           Why Choose TaskMaster?
         </h2>
